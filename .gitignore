@@ -1,0 +1,26 @@
+# ===== 敏感文件（绝对不能上传）=====
+.env
+.env.local
+.env.*.local
+
+# ===== Python 缓存 =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ===== 虚拟环境 =====
+.venv/
+venv/
+env/
+
+# ===== 项目运行时产物 =====
+output/
+input/papers/*.pdf
+
+# ===== IDE / 系统文件 =====
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

@@ -22,22 +22,29 @@
 
 ```
 scholarAgent/
-├── README.md                   # 项目说明文档
-└── paper_agent/                # 主程序目录
-    ├── main.py                 # 主入口脚本
-    ├── config.py               # 全局配置
-    ├── prompts.py              # 模型提示词模板
-    ├── .env                    # 环境变量配置（API Key 等）
-    ├── readers/                # 文件读取模块
-    │   ├── __init__.py
-    │   └── pdf_reader.py       # PDF 文件读取器（支持分页）
-    ├── processors/             # 处理模块
-    │   ├── __init__.py
-    │   ├── paper_analyzer.py   # 论文分析处理器
-    │   └── output_writer.py    # 结果输出写入器
-    └── llm/                    # 大模型接口模块
-        ├── __init__.py
-        └── api_client.py       # LLM API 客户端封装
+├── README.md                   # 项目说明文档（本文档）
+├── paper_agent/                # 主程序：文献批处理工具
+│   ├── .env                    # 环境变量配置（API Key 等）
+│   ├── .env.example            # 环境变量模板
+│   ├── main.py                 # 主入口脚本
+│   ├── config.py               # 全局配置
+│   ├── prompts.py              # 模型提示词模板
+│   ├── readers/                # 文件读取模块
+│   │   ├── __init__.py
+│   │   └── pdf_reader.py       # PDF 文件读取器（支持分页）
+│   ├── processors/             # 处理模块
+│   │   ├── __init__.py
+│   │   ├── paper_analyzer.py   # 论文分析处理器
+│   │   └── output_writer.py    # 结果输出写入器
+│   └── llm/                    # 大模型接口模块
+│       ├── __init__.py
+│       └── api_client.py       # LLM API 客户端封装
+│
+└── mini_rag/                   # 极简 RAG 示例（独立工具）
+    ├── .env.example            # RAG 工具环境变量模板
+    ├── mini_rag.py             # RAG 主脚本
+    ├── test_embedding.py       # Embedding API 测试脚本
+    └── README_mini_rag.md      # RAG 工具说明文档
 ```
 
 ---
@@ -163,7 +170,33 @@ scholarAgent/
 
 ---
 
-## 四、工作流程
+## 四、极简 RAG 示例（mini_rag/）
+
+这是一个独立的极简 RAG 工具，用于理解 RAG 闭环。详见 [`mini_rag/README_mini_rag.md`](mini_rag/README_mini_rag.md)。
+
+### 快速开始
+
+```bash
+# 安装额外依赖
+pip install chromadb
+
+# 配置环境变量
+cp mini_rag/.env.example .env
+
+# 测试 Embedding API
+python mini_rag/test_embedding.py
+
+# 导入 PDF
+python mini_rag/mini_rag.py ingest input/papers
+
+# 提问
+python mini_rag/mini_rag.py ask "这篇论文的研究方法是什么？"
+```
+
+### 功能
+- `ingest`：将 PDF 切块、向量化后存入 ChromaDB
+- `ask`：根据问题检索相似段落，调用 LLM 生成回答
+- `reset`：清空向量库
 
 ```
 用户放入 PDF → main.py 启动
@@ -270,6 +303,7 @@ OutputWriter.write_review_list(review_items) 输出：
 
 ## 六、环境依赖
 
+### paper_agent（主程序）
 - Python 3.10+
 - PyMuPDF (`pymupdf`) — PDF 文本提取
 - OpenAI SDK (`openai`) — 模型 API 调用
@@ -277,10 +311,17 @@ OutputWriter.write_review_list(review_items) 输出：
 - openpyxl — Excel 格式调整
 - python-dotenv — 环境变量加载
 
+### mini_rag（RAG 示例，可选）
+- chromadb — 向量数据库
+
 ### 安装依赖
 
 ```bash
+# 主程序依赖
 pip install pymupdf openai pandas openpyxl python-dotenv
+
+# RAG 示例额外依赖
+pip install chromadb
 ```
 
 ---
@@ -316,3 +357,4 @@ pip install pymupdf openai pandas openpyxl python-dotenv
 | 2026-07-21 | 初始版本 | 项目结构搭建，完成 main.py / config.py / prompts.py / pdf_reader.py / paper_analyzer.py / output_writer.py / api_client.py |
 | 2026-07-28 | v1.2 更新 | 增加元数据提取（作者/年份/期刊/DOI）、证据定位（页码+原文依据）、相关性评分统一主题 |
 | 2026-07-28 | v1.3 更新 | 增加分页读取、文本质量检查、人工确认清单、列表字段格式化 |
+| 2026-07-29 | v1.4 更新 | 新增 mini_rag/ 极简 RAG 示例；整理文件结构，将 RAG 工具归入独立子目录 |

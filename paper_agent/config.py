@@ -14,6 +14,6 @@ class Config:
         self.model = os.getenv("MODEL", "Longcat-2.0")
         self.api_key = os.getenv("API_KEY", "testapi")
         self.base_url = os.getenv("BASE_URL", "https://api.longcat.chat/openai/v1")
-        self.temperature = 0.3
-        self.max_tokens = 4096
-        self.evaluation_topic = os.getenv("EVALUATION_TOPIC", "AI赋能企业绿色转型")
+        self.temperature = 0.2
+        self.max_tokens = 8192
+        self.evaluation_topic = os.getenv("EVALUATION_TOPIC", "AI赋能")

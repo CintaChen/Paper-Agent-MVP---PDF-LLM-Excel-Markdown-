@@ -18,6 +18,25 @@ EVIDENCE_FIELDS = {"research_method", "data_source", "key_findings"}
 MIN_TEXT_LENGTH = 200
 
 
+def clean_json_text(text: str) -> str:
+    """清洗模型返回的文本，提取 JSON 主体"""
+    text = text.strip()
+    # 去掉可能的 Markdown 代码块
+    text = re.sub(r"^```(?:json)?\s*", "", text)
+    text = re.sub(r"\s*```$", "", text)
+    # 如果模型前后多说了话，尽量截取 JSON 主体
+    match = re.search(r"\{.*\}", text, re.DOTALL)
+    if match:
+        text = match.group(0)
+    return text
+
+
+def safe_parse_json(text: str) -> dict:
+    """安全解析 JSON，先清洗文本再解析"""
+    cleaned = clean_json_text(text)
+    return json.loads(cleaned)
+
+
 def extract_doi(text: str) -> tuple:
     """从论文文本中提取 DOI。
     返回 (doi, doi_status)：
@@ -165,7 +184,7 @@ class PaperAnalyzer:
 
         # 解析 JSON
         try:
-            parsed = json.loads(result)
+            parsed = safe_parse_json(result)
         except json.JSONDecodeError:
             # JSON 解析失败，标记为待确认
             review_reasons.append("JSON 解析失败")

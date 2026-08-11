@@ -1,7 +1,10 @@
-﻿"""LLM API client wrapper."""
+"""LLM API client wrapper."""
 from openai import OpenAI
 from config import Config
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class LLMClient:
     def __init__(self,Config):

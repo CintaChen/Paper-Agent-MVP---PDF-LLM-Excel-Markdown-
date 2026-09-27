@@ -1,0 +1,43 @@
+[project]
+name = "scholarAgent"
+version = "0.1.0"
+description = "论文辅助 Agent 系统"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "pymilvus>=2.3.0",
+    "pymupdf>=1.23.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.0.0",
+    "typer>=0.9.0",
+    "pandas>=2.0.0",
+    "openpyxl>=3.1.0",
+]
+
+[project.optional-dependencies]
+rerank = [
+    "sentence-transformers>=2.2.0",
+]
+api = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    # /api/v1/ingest/upload 使用 UploadFile，缺失会导致 app 导入即报错
+    "python-multipart>=0.0.6",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-system = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["config*", "core*", "rag*", "storage*", "agent*", "readers*", "processors*", "cli*", "api*", "tools*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

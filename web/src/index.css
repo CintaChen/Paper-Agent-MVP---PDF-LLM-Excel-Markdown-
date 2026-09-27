@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink-50: #f6f7f9;
+  --color-ink-100: #eceef2;
+  --color-ink-200: #d5d9e2;
+  --color-ink-300: #b0b7c6;
+  --color-ink-400: #8590a6;
+  --color-ink-500: #66718a;
+  --color-ink-600: #505a71;
+  --color-ink-700: #41495c;
+  --color-ink-800: #383e4e;
+  --color-ink-900: #1f2430;
+  --color-ink-950: #141821;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--color-ink-50);
+  color: var(--color-ink-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 论文正文与 Agent 输出的排版 */
+.prose-academic {
+  line-height: 1.85;
+  font-size: 0.9375rem;
+}
+.prose-academic h1,
+.prose-academic h2,
+.prose-academic h3 {
+  font-weight: 600;
+  margin: 1.25em 0 0.6em;
+  line-height: 1.4;
+}
+.prose-academic h1 {
+  font-size: 1.2rem;
+}
+.prose-academic h2 {
+  font-size: 1.075rem;
+}
+.prose-academic h3 {
+  font-size: 1rem;
+}
+.prose-academic p {
+  margin: 0.7em 0;
+}
+.prose-academic ul,
+.prose-academic ol {
+  margin: 0.7em 0;
+  padding-left: 1.4em;
+}
+.prose-academic ul {
+  list-style: disc;
+}
+.prose-academic ol {
+  list-style: decimal;
+}
+.prose-academic li {
+  margin: 0.3em 0;
+}
+.prose-academic code {
+  background: var(--color-ink-100);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.prose-academic pre {
+  background: var(--color-ink-900);
+  color: var(--color-ink-50);
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.prose-academic blockquote {
+  border-left: 3px solid var(--color-ink-300);
+  padding-left: 0.9em;
+  color: var(--color-ink-600);
+  margin: 0.8em 0;
+}
+.prose-academic table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+  font-size: 0.9em;
+}
+.prose-academic th,
+.prose-academic td {
+  border: 1px solid var(--color-ink-200);
+  padding: 0.4em 0.6em;
+  text-align: left;
+}
+.prose-academic th {
+  background: var(--color-ink-100);
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-300);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
